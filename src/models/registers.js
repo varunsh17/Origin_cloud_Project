@@ -1,30 +1,54 @@
-const express = require('express');
 const mongoose = require("mongoose")
-const employeeSchema=new mongoose.Schema({
-    firstname:{
-        type:String,
+const validator = require('validator');
+const employeeSchema = new mongoose.Schema({
+    firstname: {
+        type: String,
+        required: true,
     },
-    lastname:{
-        type:String,   
+    email: {
+        type: String,
+        unique: true,
+        require: true,
+        validate: {
+            validator: validator.isEmail,
+            message: '{VALUE} is not a valid email',
+            isAsync: false
+        }
     },
-    email:{
-        type:String, 
+    phone: {
+        type: String,
+        unique: true,
+        require: true,
+        minlength: [10, "Please enter a valid phone number"],
+        maxlength: 10,
+
     },
-    gender:{
-        type:String,
+    adress: {
+        type: String,
     },
-    phone:{
-        type:String
+    City: {
+        type: String
     },
-    age:{
-        type:Number,
+    State: {
+        type: String
     },
-    password:{
-        type:String,
+    Country: {
+        type: String
     },
-    confirmpassword:{
-        type:String,
-    }
+    CompanyName: {
+        type: String
+    },
+    Occupation: {
+        type: String
+    },
+    YearsOfExperience: {
+        type: Number
+    },
+    password: {
+        type: String,
+        require: true,
+    },
+
 })
-const Register=new mongoose.model("Register",employeeSchema)
-module.exports=Register;
+const Register = new mongoose.model("Register", employeeSchema)
+module.exports = Register;
